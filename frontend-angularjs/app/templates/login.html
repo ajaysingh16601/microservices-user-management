@@ -1,0 +1,29 @@
+<div class="auth-container">
+  <md-card class="auth-card">
+    <h2>Login</h2>
+
+    <p class="error-message" ng-if="vm.error">{{vm.error}}</p>
+
+    <form ng-submit="vm.login()">
+      <md-input-container class="full-width">
+        <label>Email</label>
+        <input type="email" ng-model="vm.credentials.email" required>
+        <div class="field-error" ng-if="vm.errors.email">{{vm.errors.email}}</div>
+      </md-input-container>
+
+      <md-input-container class="full-width">
+        <label>Password</label>
+        <input type="password" ng-model="vm.credentials.password" required>
+        <div class="field-error" ng-if="vm.errors.password">{{vm.errors.password}}</div>
+      </md-input-container>
+
+      <md-button type="submit" class="md-raised md-primary full-width" ng-disabled="vm.loading">
+        {{vm.loading ? 'Logging in...' : 'Login'}}
+      </md-button>
+    </form>
+
+    <p class="link-text">
+      Don't have an account? <a ui-sref="register">Register here</a>
+    </p>
+  </md-card>
+</div>

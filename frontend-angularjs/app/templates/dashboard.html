@@ -1,0 +1,17 @@
+<div class="main-content">
+  <div ng-if="vm.loading" class="text-center">
+    <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+  </div>
+
+  <div ng-if="!vm.loading && vm.data">
+    <md-card class="dashboard-card">
+      <h2>{{vm.data.message}}</h2>
+      <p>Email: {{vm.data.user.email}}</p>
+
+      <div layout="row" layout-align="start center" style="margin-top: 16px;">
+        <md-button class="md-raised md-primary" ui-sref="profile">View Profile</md-button>
+        <md-button class="md-raised" ui-sref="editProfile">Edit Profile</md-button>
+      </div>
+    </md-card>
+  </div>
+</div>

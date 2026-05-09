@@ -1,0 +1,43 @@
+<div class="main-content">
+  <div ng-if="vm.loading" class="text-center">
+    <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+  </div>
+
+  <div ng-if="!vm.loading && vm.user">
+    <md-card class="dashboard-card">
+      <h2 class="text-center">My Profile</h2>
+
+      <!-- Profile Photo -->
+      <div class="text-center">
+        <img ng-if="vm.user.photo"
+             ng-src="{{vm.USER_SERVICE_URL}}/uploads/profile/{{vm.user.photo}}"
+             class="profile-photo"
+             alt="Profile Photo">
+        <div ng-if="!vm.user.photo" class="profile-photo-placeholder">
+          <i class="material-icons" style="font-size: 48px;">person</i>
+        </div>
+      </div>
+
+      <!-- Upload Photo -->
+      <div class="upload-section">
+        <input type="file" id="photoInput" accept="image/*">
+        <br>
+        <md-button class="md-raised md-accent" ng-click="vm.uploadPhoto()" ng-disabled="vm.uploading">
+          {{vm.uploading ? 'Uploading...' : 'Upload Photo'}}
+        </md-button>
+      </div>
+
+      <!-- Profile Info -->
+      <div class="profile-info">
+        <p><strong>Name:</strong> {{vm.user.name}}</p>
+        <p><strong>Email:</strong> {{vm.user.email}}</p>
+        <p><strong>Phone:</strong> {{vm.user.phone || 'Not provided'}}</p>
+      </div>
+
+      <div layout="row" layout-align="start center" style="margin-top: 16px;">
+        <md-button class="md-raised md-primary" ng-click="vm.goToEdit()">Edit Profile</md-button>
+        <md-button class="md-raised" ng-click="vm.goToChangePassword()">Change Password</md-button>
+      </div>
+    </md-card>
+  </div>
+</div>
