@@ -141,10 +141,8 @@ node src/seed.js
 
 | Email | Password |
 |-------|----------|
-| admin@test.com | Password1 |
-| user1@test.com | Password1 |
-| user2@test.com | Password1 |
-
+| ajaylive@gmail.com | Password@1234 |
+<!-- These credentials are for assignment demo/testing purposes only. -->
 ---
 
 ## API Documentation
@@ -168,7 +166,7 @@ node src/seed.js
 | POST | /users/upload-photo | Upload profile photo | Yes |
 | PUT | /users/change-password | Change password | Yes |
 | GET | /users/dashboard | Get dashboard data | Yes |
-| GET | /health | Health check | No |
+| GET | /health | Health | No |
 
 ---
 
@@ -215,11 +213,11 @@ GitHub Actions workflow (`.github/workflows/deploy.yml`):
 ## Deployment
 
 ### Backend (Render)
-- Auth Service: `https://auth-service.onrender.com`
-- User Service: `https://user-service.onrender.com`
+- Auth Service: `https://auth-service-4cew.onrender.com`
+- User Service: `https://user-service-7m1w.onrender.com`
 
 ### Frontend (Vercel)
-- Frontend: `https://user-management.vercel.app`
+- Frontend: `https://microservices-user-management-git-main-ajay-solanki.vercel.app`
 
 ---
 
