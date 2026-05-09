@@ -5,10 +5,10 @@
     .module('userManagementApp')
     .factory('UserService', UserService);
 
-  UserService.$inject = ['$http', 'AuthService'];
+  UserService.$inject = ['$http', 'AuthService', 'AppConfig'];
 
-  function UserService($http, AuthService) {
-    var USER_URL = 'http://localhost:3002';
+  function UserService($http, AuthService, AppConfig) {
+    var USER_URL = AppConfig.USER_URL;
 
     var service = {
       getProfile: getProfile,

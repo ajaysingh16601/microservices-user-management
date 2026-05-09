@@ -1,0 +1,253 @@
+{
+  "info": {
+    "name": "User Management System",
+    "description": "API collection for Microservices User Management System",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "auth_url",
+      "value": "http://localhost:3001"
+    },
+    {
+      "key": "user_url",
+      "value": "http://localhost:3002"
+    },
+    {
+      "key": "token",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Auth APIs",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Ajay\",\n  \"email\": \"ajay@test.com\",\n  \"password\": \"Password1\",\n  \"phone\": \"9999999999\"\n}"
+            },
+            "url": {
+              "raw": "{{auth_url}}/auth/register",
+              "host": ["{{auth_url}}"],
+              "path": ["auth", "register"]
+            }
+          }
+        },
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "pm.collectionVariables.set('token', jsonData.token);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"ajay@test.com\",\n  \"password\": \"Password1\"\n}"
+            },
+            "url": {
+              "raw": "{{auth_url}}/auth/login",
+              "host": ["{{auth_url}}"],
+              "path": ["auth", "login"]
+            }
+          }
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{auth_url}}/auth/logout",
+              "host": ["{{auth_url}}"],
+              "path": ["auth", "logout"]
+            }
+          }
+        },
+        {
+          "name": "Validate Token",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{auth_url}}/auth/validate-token",
+              "host": ["{{auth_url}}"],
+              "path": ["auth", "validate-token"]
+            }
+          }
+        },
+        {
+          "name": "Health Check (Auth)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{auth_url}}/health",
+              "host": ["{{auth_url}}"],
+              "path": ["health"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "User APIs",
+      "item": [
+        {
+          "name": "Get Profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{user_url}}/users/profile",
+              "host": ["{{user_url}}"],
+              "path": ["users", "profile"]
+            }
+          }
+        },
+        {
+          "name": "Update Profile",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Ajay Updated\",\n  \"phone\": \"8888888888\"\n}"
+            },
+            "url": {
+              "raw": "{{user_url}}/users/profile",
+              "host": ["{{user_url}}"],
+              "path": ["users", "profile"]
+            }
+          }
+        },
+        {
+          "name": "Upload Photo",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "photo",
+                  "type": "file",
+                  "src": ""
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{user_url}}/users/upload-photo",
+              "host": ["{{user_url}}"],
+              "path": ["users", "upload-photo"]
+            }
+          }
+        },
+        {
+          "name": "Change Password",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"oldPassword\": \"Password1\",\n  \"newPassword\": \"Password2\"\n}"
+            },
+            "url": {
+              "raw": "{{user_url}}/users/change-password",
+              "host": ["{{user_url}}"],
+              "path": ["users", "change-password"]
+            }
+          }
+        },
+        {
+          "name": "Dashboard",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{user_url}}/users/dashboard",
+              "host": ["{{user_url}}"],
+              "path": ["users", "dashboard"]
+            }
+          }
+        },
+        {
+          "name": "Health Check (User)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{user_url}}/health",
+              "host": ["{{user_url}}"],
+              "path": ["health"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

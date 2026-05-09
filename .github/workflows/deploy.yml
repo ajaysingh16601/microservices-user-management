@@ -1,0 +1,62 @@
+name: Deploy to Render
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build-auth-service:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./auth-service
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build
+        run: npm run build
+
+      - name: Deploy Auth Service to Render
+        env:
+          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+          AUTH_SERVICE_ID: ${{ secrets.AUTH_SERVICE_ID }}
+        run: |
+          curl -X POST "https://api.render.com/v1/services/$AUTH_SERVICE_ID/deploys" \
+            -H "Authorization: Bearer $RENDER_API_KEY"
+
+  build-user-service:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./user-service
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build
+        run: npm run build
+
+      - name: Deploy User Service to Render
+        env:
+          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+          USER_SERVICE_ID: ${{ secrets.USER_SERVICE_ID }}
+        run: |
+          curl -X POST "https://api.render.com/v1/services/$USER_SERVICE_ID/deploys" \
+            -H "Authorization: Bearer $RENDER_API_KEY"

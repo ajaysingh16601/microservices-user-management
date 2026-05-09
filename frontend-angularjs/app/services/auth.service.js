@@ -5,10 +5,10 @@
     .module('userManagementApp')
     .factory('AuthService', AuthService);
 
-  AuthService.$inject = ['$http', '$window'];
+  AuthService.$inject = ['$http', '$window', 'AppConfig'];
 
-  function AuthService($http, $window) {
-    var AUTH_URL = 'http://localhost:3001';
+  function AuthService($http, $window, AppConfig) {
+    var AUTH_URL = AppConfig.AUTH_URL;
 
     var service = {
       login: login,
