@@ -54,10 +54,25 @@ export class UsersService {
     return result;
   }
 
-  async updateProfile(authUser: any, updateProfileDto: UpdateProfileDto) {
+  async updateProfile(authUser: any, updateProfileDto: UpdateProfileDto, token: string) {
     const authId = authUser._id.toString();
-    await this.findOrCreateUser(authUser);
+    const authServiceUrl = this.configService.get<string>('AUTH_SERVICE_URL');
+    
+    // 1. First, update the Auth Service (Source of Truth for name, email, phone)
+    try {
+      await axios.put(
+        `${authServiceUrl}/auth/account`,
+        updateProfileDto,
+        { headers: { Authorization: token } }
+      );
+    } catch (error) {
+      if (error.response && error.response.data) {
+        throw new BadRequestException(error.response.data.message || 'Failed to update authentication data');
+      }
+      throw new BadRequestException('Auth service unavailable');
+    }
 
+    // 2. If Auth Service update succeeds, update the local User Service DB
     const user = await this.userModel.findOneAndUpdate(
       { authId },
       { $set: updateProfileDto },

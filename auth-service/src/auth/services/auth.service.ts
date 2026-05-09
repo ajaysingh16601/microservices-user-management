@@ -96,6 +96,30 @@ export class AuthService {
     return { message: 'Password changed successfully' };
   }
 
+  async updateAccount(userId: string, updateDto: any) {
+    const { name, email, phone } = updateDto;
+    
+    // Check if another user already has this email
+    if (email) {
+      const existingUser = await this.userModel.findOne({ email, _id: { $ne: userId } });
+      if (existingUser) {
+        throw new BadRequestException('Email is already in use by another account');
+      }
+    }
+
+    const user = await this.userModel.findByIdAndUpdate(
+      userId,
+      { $set: { name, email, phone } },
+      { new: true }
+    );
+
+    if (!user) {
+      throw new UnauthorizedException('User not found');
+    }
+
+    return user;
+  }
+
   private generateToken(user: UserDocument): string {
     const payload = { sub: user._id, email: user.email, name: user.name };
     return this.jwtService.sign(payload);

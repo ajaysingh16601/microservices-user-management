@@ -29,7 +29,7 @@ export class UsersController {
 
   @Put('profile')
   async updateProfile(@Req() req, @Body() updateProfileDto: UpdateProfileDto) {
-    return this.usersService.updateProfile(req.user, updateProfileDto);
+    return this.usersService.updateProfile(req.user, updateProfileDto, req.headers.authorization);
   }
 
   @Put('change-password')

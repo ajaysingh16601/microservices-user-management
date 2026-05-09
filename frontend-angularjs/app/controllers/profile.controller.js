@@ -5,16 +5,16 @@
     .module('userManagementApp')
     .controller('ProfileController', ProfileController);
 
-  ProfileController.$inject = ['UserService', '$state'];
+  ProfileController.$inject = ['UserService', '$state', 'AppConfig'];
 
-  function ProfileController(UserService, $state) {
+  function ProfileController(UserService, $state, AppConfig) {
     var vm = this;
 
     vm.user = null;
     vm.loading = true;
     vm.uploading = false;
     vm.photoFile = null;
-    vm.USER_SERVICE_URL = 'http://localhost:3002';
+    vm.USER_SERVICE_URL = AppConfig.USER_URL;
 
     activate();
 

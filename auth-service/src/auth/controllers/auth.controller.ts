@@ -35,6 +35,12 @@ export class AuthController {
     return this.authService.changePassword(req.user.userId, changePasswordDto);
   }
 
+  @Put('account')
+  @UseGuards(JwtAuthGuard)
+  async updateAccount(@Req() req, @Body() updateDto: any) {
+    return this.authService.updateAccount(req.user.userId, updateDto);
+  }
+
   @Get('validate-token')
   @UseGuards(JwtAuthGuard)
   async validateToken(@Req() req) {
