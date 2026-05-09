@@ -2,6 +2,11 @@ import { NestFactory } from '@nestjs/core';
 import { ValidationPipe, BadRequestException } from '@nestjs/common';
 import { AppModule } from './app.module';
 
+// Ensure crypto is available globally for MongoDB driver
+if (typeof global.crypto === 'undefined') {
+  global.crypto = require('crypto');
+}
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
