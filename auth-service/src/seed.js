@@ -1,9 +1,14 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const path = require('path');
+
+// Load environment variables based on NODE_ENV (default to 'dev')
+const envFile = `.env.${process.env.NODE_ENV || 'dev'}`;
+require('dotenv').config({ path: path.resolve(__dirname, '..', envFile) });
 
 // Update this with your MongoDB connection string
-const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/auth_test';
-
+const MONGO_URI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/auth_test';
+console.log('Connecting to:', MONGO_URI);
 const userSchema = new mongoose.Schema({
   name: String,
   email: { type: String, unique: true },
